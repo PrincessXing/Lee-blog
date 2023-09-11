@@ -12,5 +12,8 @@ public class SystemConstants {
      * 文章状态是发布
      */
     public static final Integer ARTICLE_STATUS_PUBLISH = 0;
-
+    /**
+     * 分类状态是删除
+     */
+    public static final String CATEGORY_STATUS_NORMAL = "0";
 }
