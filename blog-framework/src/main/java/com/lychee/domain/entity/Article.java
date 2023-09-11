@@ -1,4 +1,4 @@
-package com.lychee.domain;
+package com.lychee.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
