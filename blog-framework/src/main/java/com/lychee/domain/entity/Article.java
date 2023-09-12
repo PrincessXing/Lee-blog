@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
@@ -19,6 +20,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @TableName("article")
+@Accessors(chain = true)
 public class Article {
     @TableId
     private Long id;
@@ -29,11 +31,14 @@ public class Article {
     @TableField("content")
     private String content;
     //文章摘要
-    @TableField("category_id")
+    @TableField("summary")
     private String summary;
     //所属分类id
     @TableField("category_id")
     private Long categoryId;
+    //所属分类名称
+    @TableField(exist = false)
+    private String categoryName;
     //缩略图
     @TableField("thumbnail")
     private String thumbnail;
