@@ -12,10 +12,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class ArticleController {
     @Autowired
     private ArticleService articleService;
-
+    // 查询热门文章
     @GetMapping("/hotArticleList")
     public ResponseResult hotArticleList() {
         return articleService.hotArticleList();
+    }
+    // 分页查询文章列表
+    @GetMapping("/articleList")
+    public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
+        return articleService.articleList(pageNum,pageSize,categoryId);
     }
 
 }
