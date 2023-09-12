@@ -6,9 +6,12 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lychee.constans.SystemConstants;
 import com.lychee.domain.entity.Article;
 import com.lychee.domain.ResponseResult;
+import com.lychee.domain.entity.Category;
+import com.lychee.domain.vo.ArticleDetailVo;
 import com.lychee.domain.vo.ArticleListVo;
 import com.lychee.domain.vo.HotArticleVo;
 import com.lychee.domain.vo.PageVo;
+import com.lychee.enums.AppHttpCodeEnum;
 import com.lychee.mapper.ArticleMapper;
 import com.lychee.service.ArticleService;
 import com.lychee.service.CategoryService;
@@ -38,7 +41,7 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<HotArticleVo> hotArticleVos = BeanCopyUtils.copyMultiple(articles, HotArticleVo.class);
         return ResponseResult.okResult(hotArticleVos);
     }
-
+    // 分页查询文章列表
     @Override
     public ResponseResult articleList(Integer pageNum, Integer pageSize, Long categoryId) {
         // 查询条件
@@ -60,5 +63,22 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         List<ArticleListVo> articleListVos = BeanCopyUtils.copyMultiple(articles, ArticleListVo.class);
         PageVo pageVo = new PageVo(articleListVos, page.getTotal());
         return ResponseResult.okResult(pageVo);
+    }
+
+    // 查询文章详情
+    @Override
+    public ResponseResult getArticleDetail(Long id) {
+        Article article = getById(id);
+        if (article == null) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.valueOf("Article does not exist"));
+        }
+        ArticleDetailVo articleDetailVo = BeanCopyUtils.copy(article, ArticleDetailVo.class);
+        Long categoryId = articleDetailVo.getCategoryId();
+        Category category = categoryService.getById(categoryId);
+        if (category == null) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.valueOf("Category does not exist"));
+        }
+        articleDetailVo.setCategoryName(category.getName());
+        return ResponseResult.okResult(articleDetailVo);
     }
 }
