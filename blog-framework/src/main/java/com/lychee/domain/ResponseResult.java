@@ -6,6 +6,7 @@ import com.lychee.enums.AppHttpCodeEnum;
 import java.io.Serializable;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@SuppressWarnings("unchecked")
 public class ResponseResult<T> implements Serializable {
 
     private Integer code;

@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lychee.constans.SystemConstants;
-import com.lychee.domain.entity.Article;
 import com.lychee.domain.ResponseResult;
+import com.lychee.domain.entity.Article;
 import com.lychee.domain.entity.Category;
 import com.lychee.domain.vo.ArticleDetailVo;
 import com.lychee.domain.vo.ArticleListVo;
@@ -24,6 +24,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
+@SuppressWarnings("unchecked")
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
     @Autowired
     private CategoryService categoryService;
