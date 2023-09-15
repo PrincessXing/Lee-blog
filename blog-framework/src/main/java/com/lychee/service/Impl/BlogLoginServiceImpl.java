@@ -19,7 +19,7 @@ import java.util.Objects;
 
 @Service
 public class BlogLoginServiceImpl implements BlogLoginService {
-    @Autowired
+    @Autowired(required = false)
     private AuthenticationManager authenticationManager;
     @Autowired
     private RedisCache redisCache;
