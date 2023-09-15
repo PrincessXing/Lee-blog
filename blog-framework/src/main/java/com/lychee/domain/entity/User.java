@@ -13,9 +13,9 @@ public class User {
 
     private Long id;
     // 用户名
-    private String username;
+    private String userName;
     // 昵称
-    private String nickname;
+    private String nickName;
     // 密码
     private String password;
     // 用户类型 0 普通用户 1 管理员
@@ -25,7 +25,7 @@ public class User {
     // 邮箱
     private String email;
     // 手机号
-    private String phonenumber;
+    private String phoneNumber;
     // 性别 0 男 1 女 2 保密
     private String sex;
     // 头像

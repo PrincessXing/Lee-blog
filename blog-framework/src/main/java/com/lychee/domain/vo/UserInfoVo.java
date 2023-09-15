@@ -9,7 +9,7 @@ public class UserInfoVo {
 
     private Long id;
     // 昵称
-    private String nickname;
+    private String nickName;
     // 头像
     private String avatar;
     // 性别
