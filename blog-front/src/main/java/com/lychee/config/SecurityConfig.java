@@ -1,5 +1,7 @@
 package com.lychee.config;
 
+import com.lychee.filter.JwtAuthenticationTokenFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -11,6 +13,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+
     // 登录认证管理器
     @Bean(name = "authenticationManager")
     @Override
@@ -33,10 +38,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 登录接口放行 允许匿名访问
                 .antMatchers("/login").anonymous()
+                // 友链接口需要鉴权认证
+                .antMatchers("/link/getAllLink").authenticated()
                 // 除上面的所有请求全部不需要鉴权认证即可访问
                 .anyRequest().permitAll();
 
         http.logout().disable();
+        // 添加自定义过滤器
+        http.addFilterBefore(jwtAuthenticationTokenFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
         // 允许跨域
         http.cors();
     }
