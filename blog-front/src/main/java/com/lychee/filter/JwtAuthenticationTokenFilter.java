@@ -20,6 +20,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Objects;
 
 // 认证过滤器
 // OncePerRequestFilter 保证每次请求只会被执行一次
@@ -51,6 +52,12 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String userId = claims.getSubject();
         // 从redis中获取用户信息
         LoginUser loginUser = redisCache.getCacheObject("blogLogin:" + userId);
+        // 如果获取不到用户信息 说明用户信息已经过期 响应给前端需要重新登录
+        if (Objects.isNull(loginUser)) {
+            ResponseResult result = ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
+            WebUtils.renderString(httpServletResponse, JSON.toJSONString(result));
+            return;
+        }
         // 存入SecurityContextHolder
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser, null, null);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
