@@ -10,11 +10,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter;
+    @Autowired
+    AuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    AccessDeniedHandler accessDeniedHandler;
 
     // 登录认证管理器
     @Bean(name = "authenticationManager")
@@ -38,11 +44,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 // 登录接口放行 允许匿名访问
                 .antMatchers("/login").anonymous()
-                // 友链接口需要鉴权认证
-                .antMatchers("/link/getAllLink").authenticated()
                 // 除上面的所有请求全部不需要鉴权认证即可访问
                 .anyRequest().permitAll();
-
+        // 配置自定义的异常处理器
+        http.exceptionHandling()
+                // 认证失败处理类
+                .authenticationEntryPoint(authenticationEntryPoint)
+                // 授权失败处理类
+                .accessDeniedHandler(accessDeniedHandler);
         http.logout().disable();
         // 添加自定义过滤器
         http.addFilterBefore(jwtAuthenticationTokenFilter, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter.class);
