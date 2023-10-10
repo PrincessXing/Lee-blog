@@ -6,6 +6,6 @@ import com.lychee.mapper.UserMapper;
 import com.lychee.service.UserService;
 import org.springframework.stereotype.Service;
 
-@Service("sysUserService")
+@Service("userService")
 public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 }
