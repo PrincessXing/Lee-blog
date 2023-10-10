@@ -21,10 +21,11 @@ public class BlogLoginController {
         if (!StringUtils.hasText(user.getUserName())) {
             throw new SystemException(AppHttpCodeEnum.REQUIRE_USERNAME);
         }
-//        if (!StringUtils.hasText(user.getPassword())) {
-//            throw new SystemException(AppHttpCodeEnum.LOGIN_ERROR);
-//        }
         return blogLoginService.login(user);
+    }
+    @PostMapping("/logout")
+    public ResponseResult logout() {
+        return blogLoginService.logout();
     }
 
 }
