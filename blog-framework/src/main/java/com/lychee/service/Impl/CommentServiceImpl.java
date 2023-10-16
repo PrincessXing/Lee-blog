@@ -24,11 +24,13 @@ import java.util.List;
 public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> implements CommentService {
     @Autowired
     private UserService userService;
+    // 评论列表查询
     @Override
-    public ResponseResult<?> commentList(Long articleId, Integer pageNum, Integer pageSize) {
+    public ResponseResult<?> commentList(String commentType,Long articleId, Integer pageNum, Integer pageSize) {
         // 查询文章的根评论(值为-1的评论)
         LambdaQueryWrapper<Comment> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(Comment::getArticleId, articleId);
+        queryWrapper.eq(Comment::getType, commentType);
+        queryWrapper.eq(SystemConstants.ARTICLE_COMMENT.equals(commentType),Comment::getArticleId, articleId);
         queryWrapper.eq(Comment::getRootId, SystemConstants.ROOT_ID_DEFAULT_VALUE);
         // 分页查询
         Page<Comment> page = new Page<>(pageNum, pageSize);
@@ -57,7 +59,7 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         return commentVos;
     }
 
-
+    // 添加评论
     @Override
     public ResponseResult<?> addComment(Comment comment) {
         if (!StringUtils.hasText(comment.getContent())) {
