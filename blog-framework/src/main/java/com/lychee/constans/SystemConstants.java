@@ -24,4 +24,14 @@ public class SystemConstants {
      * 根评论默认值
      */
     public static final String ROOT_ID_DEFAULT_VALUE = "-1";
+
+    /**
+     * 评论类型为：文章评论
+     */
+    public static final String ARTICLE_COMMENT = "0";
+    /**
+     * 评论类型为：友链评论
+     */
+    public static final String LINK_COMMENT = "1";
+
 }
