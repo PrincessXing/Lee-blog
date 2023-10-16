@@ -8,12 +8,15 @@ import com.lychee.domain.ResponseResult;
 import com.lychee.domain.entity.Comment;
 import com.lychee.domain.vo.CommentVo;
 import com.lychee.domain.vo.PageVo;
+import com.lychee.enums.AppHttpCodeEnum;
+import com.lychee.exception.SystemException;
 import com.lychee.mapper.CommentMapper;
 import com.lychee.service.CommentService;
 import com.lychee.service.UserService;
 import com.lychee.utils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 
@@ -53,6 +56,19 @@ public class CommentServiceImpl extends ServiceImpl<CommentMapper, Comment> impl
         }
         return commentVos;
     }
+
+
+    @Override
+    public ResponseResult<?> addComment(Comment comment) {
+        if (!StringUtils.hasText(comment.getContent())) {
+            throw new SystemException(AppHttpCodeEnum.CONTENT_NOT_NULL);
+        }
+        // 评论的创建者 创建时间由MyMetaObjectHandler自动填充
+        save(comment);
+        return ResponseResult.okResult();
+    }
+
+
     /**
      * 根据根评论id查询对应子评论的集合
      * @param id 根评论id

@@ -1,11 +1,10 @@
 package com.lychee.controller;
 
 import com.lychee.domain.ResponseResult;
+import com.lychee.domain.entity.Comment;
 import com.lychee.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/comment")
@@ -16,4 +15,9 @@ public class CommentController {
     public ResponseResult<?> commentList(Long articleId, Integer pageNum, Integer pageSize) {
         return commentService.commentList(articleId, pageNum, pageSize);
     }
+    @PostMapping
+    public ResponseResult<?> addComment(@RequestBody Comment comment) {
+        return commentService.addComment(comment);
+    }
+
 }
