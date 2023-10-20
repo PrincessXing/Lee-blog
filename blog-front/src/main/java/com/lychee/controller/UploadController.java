@@ -12,7 +12,7 @@ public class UploadController {
     @Autowired
     private UploadService uploadService;
     @PostMapping("/upload")
-    public ResponseResult<?> uploadTmg(MultipartFile img) {
+    public ResponseResult<?> uploadImg(MultipartFile img) {
         return uploadService.uploadImg(img);
     }
 
