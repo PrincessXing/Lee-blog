@@ -48,7 +48,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/logout").authenticated()
                 // 个人信息接口需要认证后才能访问
                 .antMatchers("/user/userInfo").authenticated()
+                // 上传图片接口需要认证后才能访问
                 .antMatchers("/upload").authenticated()
+                // 更新个人信息接口需要认证后才能访问
+                .antMatchers("/user/userInfo").authenticated()
                 // 除上面的所有请求全部不需要鉴权认证即可访问
                 .anyRequest().permitAll();
         // 配置自定义的异常处理器
