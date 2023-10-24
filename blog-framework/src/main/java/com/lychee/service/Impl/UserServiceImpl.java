@@ -58,6 +58,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
             throw new SystemException(AppHttpCodeEnum.USERNAME_EXIST);
         }
         // 判断邮箱是否存在
+        if (emailIsExist(user.getEmail())) {
+            throw new SystemException(AppHttpCodeEnum.EMAIL_EXIST);
+        }
+        // 判断昵称是否存在
         if (nickNameIsExist(user.getNickName())) {
             throw new SystemException(AppHttpCodeEnum.NICKNAME_EXIST);
         }
@@ -75,6 +79,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     //判断昵称是否存在
     public boolean nickNameIsExist(String nickName) {
         User user = getOne(Wrappers.<User>lambdaQuery().eq(User::getNickName, nickName));
+        return user != null;
+    }
+    //判断邮箱是否存在
+    public boolean emailIsExist(String email) {
+        User user = getOne(Wrappers.<User>lambdaQuery().eq(User::getEmail, email));
         return user != null;
     }
 
