@@ -1,5 +1,6 @@
 package com.lychee.controller;
 
+import com.lychee.annotation.SystemLog;
 import com.lychee.domain.ResponseResult;
 import com.lychee.domain.entity.User;
 import com.lychee.service.UserService;
@@ -16,6 +17,7 @@ public class UserController {
         return userService.userInfo();
     }
     @PutMapping("/userInfo")
+    @SystemLog(businessName = "更新用户信息")
     public ResponseResult<?> updateUserInfo(@RequestBody User user) {
         return userService.updateUserInfo(user);
     }
