@@ -27,7 +27,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new RuntimeException("User does not exist");
         }
         // 返回用户信息
-        // TODO: 从数据库中查询用户权限信息封装
+        // 从数据库中查询用户权限信息封装
         return new LoginUser(user);
     }
 }
