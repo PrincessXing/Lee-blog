@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 @Aspect
 @Slf4j
 public class LogAspect {
-    // 切点
+    // 切点 以自定义注解为切点
     @Pointcut("@annotation(com.lychee.annotation.SystemLog)")
     public void pt() {
         System.out.println("pt");
@@ -38,7 +38,7 @@ public class LogAspect {
         }
         return ret;
     }
-    // 前置通知
+    // 前置通知 在切点方法执行前执行
     private void handlerBefore(ProceedingJoinPoint joinPoint) {
 
         ServletRequestAttributes requestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
@@ -60,7 +60,7 @@ public class LogAspect {
         log.info("Request Args   : {}", JSON.toJSONString(joinPoint.getArgs()));
     }
 
-    // 后置通知
+    // 后置通知 在切点方法正常执行后执行
     private void handlerAfter(Object ret) {
         // 打印出参
         log.info("Response       : {}", JSON.toJSONString(ret));
