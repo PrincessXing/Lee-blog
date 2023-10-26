@@ -16,6 +16,7 @@ import com.lychee.mapper.ArticleMapper;
 import com.lychee.service.ArticleService;
 import com.lychee.service.CategoryService;
 import com.lychee.utils.BeanCopyUtils;
+import com.lychee.utils.RedisCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,8 @@ import java.util.stream.Collectors;
 public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> implements ArticleService {
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private RedisCache redisCache;
     // 热门文章列表
     @Override
     public ResponseResult hotArticleList() {
@@ -81,5 +84,12 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         }
         articleDetailVo.setCategoryName(category.getName());
         return ResponseResult.okResult(articleDetailVo);
+    }
+    // 更新redis中的文章浏览量
+    @Override
+    public ResponseResult updateViewCount(Long id) {
+        //更新redis中的浏览量
+        redisCache.incrementCacheMapValue("article:viewCount",id.toString(),1);
+        return ResponseResult.okResult();
     }
 }
