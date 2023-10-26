@@ -70,5 +70,10 @@ public class Article {
     @TableField("del_flag")
     private Integer delFlag;
 
+    // 增加获取id、viewCount构造方法
+    public Article(Long id, long viewCount) {
+        this.id = id;
+        this.viewCount = viewCount;
+    }
 }
 
