@@ -60,6 +60,15 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         Page<Article> page = new Page<>(pageNum, pageSize);
         page(page, wrapper);
         List<Article> articles = page.getRecords();
+        //从redis中获取浏览量
+//        Stream<String> stringStream = articles.stream().map(article -> article.getId().toString());
+//        Object cacheMapValue = redisCache.getCacheMapValue("article:viewCount", Arrays.toString(stringStream.toArray(String[]::new)));
+//        if (cacheMapValue != null) {
+//            List<Integer> viewCounts = (List<Integer>) cacheMapValue;
+//            for (int i = 0; i < articles.size(); i++) {
+//                articles.get(i).setViewCount(viewCounts.get(i).longValue());
+//            }
+//        }
         // 查询categoryName
         articles = articles.stream()
                 .map(article -> article.setCategoryName(categoryService.getById(article.getCategoryId()).getName()))
@@ -76,6 +85,10 @@ public class ArticleServiceImpl extends ServiceImpl<ArticleMapper, Article> impl
         if (article == null) {
             return ResponseResult.errorResult(AppHttpCodeEnum.valueOf("Article does not exist"));
         }
+        //从redis中获取浏览量
+        Integer viewCount = redisCache.getCacheMapValue("article:viewCount", id.toString());
+        article.setViewCount(viewCount.longValue());
+
         ArticleDetailVo articleDetailVo = BeanCopyUtils.copy(article, ArticleDetailVo.class);
         Long categoryId = articleDetailVo.getCategoryId();
         Category category = categoryService.getById(categoryId);
