@@ -1,4 +1,4 @@
-package com.lychee.service.Impl;
+package com.lychee.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

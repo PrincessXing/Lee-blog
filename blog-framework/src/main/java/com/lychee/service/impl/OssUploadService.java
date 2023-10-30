@@ -1,4 +1,4 @@
-package com.lychee.service.Impl;
+package com.lychee.service.impl;
 
 import com.google.gson.Gson;
 import com.lychee.domain.ResponseResult;
