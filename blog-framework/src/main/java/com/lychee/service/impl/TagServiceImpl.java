@@ -1,4 +1,4 @@
-package com.lychee.service.Impl;
+package com.lychee.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.lychee.domain.entity.Tag;
