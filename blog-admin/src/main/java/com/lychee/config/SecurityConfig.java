@@ -42,6 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
+                // 登录接口认证
+                .antMatchers("/user/login").authenticated()
                 .anyRequest().permitAll();
         // 配置自定义的异常处理器
         http.exceptionHandling()
