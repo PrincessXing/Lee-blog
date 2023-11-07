@@ -33,5 +33,17 @@ public class SystemConstants {
      * 评论类型为：友链评论
      */
     public static final String LINK_COMMENT = "1";
+    /**
+     * 角色状态为：正常
+     */
+    public static final String STATUS_NORMAL = "0";
+    /**
+     * 菜单类型为：菜单
+     */
+    public static final String MENU = "M";
+    /**
+     * 菜单类型为：按钮
+     */
+    public static final String BUTTON = "F";
 
 }
