@@ -2,8 +2,10 @@ package com.lychee.controller;
 
 import com.lychee.domain.ResponseResult;
 import com.lychee.domain.entity.LoginUser;
+import com.lychee.domain.entity.Menu;
 import com.lychee.domain.entity.User;
 import com.lychee.domain.vo.AdminUserInfoVo;
+import com.lychee.domain.vo.RoutersVo;
 import com.lychee.domain.vo.UserInfoVo;
 import com.lychee.enums.AppHttpCodeEnum;
 import com.lychee.exception.SystemException;
@@ -50,6 +52,15 @@ public class LoginController {
         UserInfoVo userInfoVo = BeanCopyUtils.copy(user, UserInfoVo.class);
         AdminUserInfoVo adminUserInfoVo = new AdminUserInfoVo(perms, roleKeyList, userInfoVo);
         return ResponseResult.okResult(adminUserInfoVo);
+    }
+
+    // 获取路由信息
+    @GetMapping("/getRouters")
+    public ResponseResult<RoutersVo> getRouters() {
+        Long userId = SecurityUtils.getLoginUser().getUser().getId();
+        // 通过用户id查询用户的菜单权限
+        List<Menu> menus = menuService.selectRouterMenuTreeByUserId(userId);
+        return ResponseResult.okResult(new RoutersVo(menus));
     }
 
 }
