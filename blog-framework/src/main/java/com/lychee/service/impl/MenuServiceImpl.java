@@ -27,6 +27,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements Me
             List<String> perms = menus.stream().map(Menu::getPerms).collect(Collectors.toList());
             return perms;
         }
+        //返回用户所具有的权限
         return getBaseMapper().selectPermsByUserId(id);
     }
     // 通过用户id查询用户的菜单路由信息

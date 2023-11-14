@@ -7,7 +7,7 @@
         FROM user_role ur
                  left join role_menu rm on ur.role_id = rm.role_id
                  left join menu m on m.id = rm.menu_id
-        WHERE user_role.user_id = #{id}
+        WHERE user_role.user_id = #{userId}
             ur.`user_id` = #{id} AND
             m.`menu_type` IN ('C','F') AND
             m.`status` = 0 AND

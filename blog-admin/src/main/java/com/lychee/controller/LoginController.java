@@ -63,4 +63,10 @@ public class LoginController {
         return ResponseResult.okResult(new RoutersVo(menus));
     }
 
+    // 退出登录
+    @PostMapping("/user/logout")
+    public ResponseResult<?> logout(){
+        return loginService.logout();
+    }
+
 }
