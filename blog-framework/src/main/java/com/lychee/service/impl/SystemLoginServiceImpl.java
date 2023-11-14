@@ -8,6 +8,7 @@ import com.lychee.exception.SystemException;
 import com.lychee.service.LoginService;
 import com.lychee.utils.JwtUtil;
 import com.lychee.utils.RedisCache;
+import com.lychee.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -37,5 +38,13 @@ public class SystemLoginServiceImpl implements LoginService {
         // 返回token
         map.put("token", jwt);
         return ResponseResult.okResult(map);
+    }
+
+    @Override
+    public ResponseResult<?> logout() {
+        // 删除redis中缓存的用户信息
+        Long userId = SecurityUtils.getUserId();
+        redisCache.deleteObject("login:" + userId);
+        return ResponseResult.okResult();
     }
 }

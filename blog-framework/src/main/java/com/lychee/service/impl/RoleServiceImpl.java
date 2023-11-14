@@ -19,6 +19,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             roleKeys.add("admin");
             return roleKeys;
         }
+        // 否则查询用户所具有的角色信息
         return getBaseMapper().selectRoleKeyByUserId(userId);
     }
 
