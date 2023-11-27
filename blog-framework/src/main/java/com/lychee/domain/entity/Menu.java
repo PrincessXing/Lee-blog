@@ -5,11 +5,16 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+import java.util.List;
+
 // 菜单权限表
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("menu")
+@Accessors(chain = true) // 链式调用 使set方法返回当前对象
 public class Menu {
     @TableId
     private Long id;
@@ -17,6 +22,8 @@ public class Menu {
     private String menuName;
     // 父菜单ID
     private Long parentId;
+    // 祖级列表
+    private List<Menu> children;
     // 显示顺序
     private Integer orderNum;
     // 路由地址
